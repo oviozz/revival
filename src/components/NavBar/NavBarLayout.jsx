@@ -7,7 +7,9 @@ function NavBarLayout(props){
     return (
         <nav>
             <NavBar />
-            {props.children}
+            <main className={'p-5'}>
+                {props.children}
+            </main>
         </nav>
     )
 

@@ -7,7 +7,12 @@ export default {
     'node_modules/flowbite-react/lib/esm/**/*.js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        logoBlue: '#146CA3',
+        logoHover: '#1881c2'
+      }
+    },
   },
   // eslint-disable-next-line no-undef
   plugins: [require('flowbite/plugin')],

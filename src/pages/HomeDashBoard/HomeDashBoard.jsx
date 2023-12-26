@@ -24,12 +24,13 @@ function HomeDashBoard(){
         setProjectData([...projectData, newProject]);
     };
 
+
     return (
 
-        <div className={"p-5 "}>
+        <div className={""}>
 
-            <div className={"flex justify-between"}>
-                <h1 className={"font-semibold"}>{projectData.length} Projects</h1>
+            <div className={"flex justify-between items-center"}>
+                <h1 className={"text-lg font-semibold"}>{projectData.length} Projects</h1>
                 <CreateProjectModal onProjectCreate={addProject}/>
             </div>
 

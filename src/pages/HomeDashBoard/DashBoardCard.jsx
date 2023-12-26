@@ -6,7 +6,8 @@ function DashBoardCard({project}){
     const {projectName, clientName, extraInfo} = project
 
     return (
-        <Card href="#" className="lg:min-w-[29rem] min-w-[22rem]">
+        <Card href="#" className="lg:min-w-[29rem] min-w-[22rem] shadow-none border-2">
+
             <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {projectName}
             </h5>

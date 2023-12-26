@@ -5,7 +5,7 @@ const NavBarProfile = () => {
 
     return (
         <div className={""}>
-            <Avatar variant="solid" />
+            <Avatar variant="outlined" />
         </div>
     )
 
