@@ -3,7 +3,8 @@ import {Button} from "flowbite-react";
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useSignup} from "../../hooks/useSignup.jsx";
-
+import LinearProgress from '@mui/joy/LinearProgress';
+import Loader from "../../components/CompAssests/Loader.jsx";
 
 const Signup = () => {
 
@@ -11,6 +12,7 @@ const Signup = () => {
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 -mt-10">
+
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Sign up to your account
@@ -34,7 +36,7 @@ const Signup = () => {
                             d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z"
                             fill="#EB4335"/>
                     </svg>
-                    Sign up with Google
+                    Continue with Google
                 </button>
 
                 <div

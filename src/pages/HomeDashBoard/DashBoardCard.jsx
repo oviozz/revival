@@ -1,28 +1,45 @@
 
 import { Card } from 'flowbite-react';
+import CardToolMenu from "../../components/CompAssests/CardToolMenu.jsx";
+import {Link} from "react-router-dom";
 
 function DashBoardCard({project}){
 
-    const {projectName, clientName, extraInfo} = project
+    const {projectName, clientName, extraInfo, lastUpdated} = project;
+
+    const handleToolMenuClick = (e) => {
+        e.preventDefault();
+    };
 
     return (
-        <Card href="#" className="lg:min-w-[29rem] min-w-[22rem] shadow-none border-2">
+        <Link to={"/a"}>
+            <Card className="hover:bg-gray-100 relative lg:min-w-[470px] h-[175px] shadow-none border-2 md:w-full">
 
-            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {projectName}
-            </h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">
-                {clientName}
-            </p>
+                <div className={"absolute top-0 right-0"} onClick={handleToolMenuClick}>
+                    <CardToolMenu project={project}/>
+                </div>
 
-            <ul className={"flex gap-5"}>
-                {
-                    extraInfo?.map((item, index) => (
-                        <li className={"bg-teal-700 text-white text-sm p-2 rounded-md "} key={index}>{item}</li>
-                    ))
-                }
-            </ul>
-        </Card>
+                <h1 className={"font-medium lg:text-sm text-xs absolute bottom-0.5 right-1.5 text-gray-400 flex gap-1"}>
+                    Last Updated:
+                    <span className={"font-light"}>{lastUpdated}</span>
+                </h1>
+
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {projectName}
+                </h5>
+                <p className="font-normal text-gray-700 dark:text-gray-400">
+                    {clientName}
+                </p>
+
+                <ul className={"flex gap-5 "}>
+                    {
+                        extraInfo?.map((item, index) => (
+                            <li className={"bg-teal-700 text-white text-sm p-2 rounded-md"} key={index}>{item}</li>
+                        ))
+                    }
+                </ul>
+            </Card>
+        </Link>
     )
 }
 

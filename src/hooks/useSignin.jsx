@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import {Navigate, useNavigate} from "react-router-dom";
-import {signInWithEmailAndPassword, signInWithPopup} from "firebase/auth";
+import {signInWithEmailAndPassword, signInWithPopup, getAdditionalUserInfo, signOut} from "firebase/auth";
 import {auth, provider} from "../auth/Config.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
+import {storeUserDB} from "../utils/storeUserDB.jsx";
 
 export const useSignin = () => {
 
@@ -48,6 +49,11 @@ export const useSignin = () => {
 
             const userCredential = await signInWithPopup(auth, provider)
             const user = userCredential.user
+            const additionalUserInfo = getAdditionalUserInfo(userCredential);
+
+            if (additionalUserInfo.isNewUser) {
+                await storeUserDB(user, userInfo)
+            }
 
             setAuthToken(user, user.accessToken)
             navigate('/')

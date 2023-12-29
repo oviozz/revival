@@ -29,17 +29,7 @@ const SurveyDashBoard = () => {
 
                 <SurveyCard />
 
-                <SurveyCard />
-
-
-                <SurveyCard />
-
-
             </div>
-
-
-
-
 
         </div>
     )

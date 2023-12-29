@@ -1,7 +1,7 @@
 
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import {auth} from "../auth/Config.jsx";
+import {auth} from "./Config.jsx"
 
 const AuthContext = createContext();
 
@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
     const [token, setToken] = useState(localStorage.getItem('token') || null);
     const [userInfo, setUserInfo] = useState(JSON.parse(localStorage.getItem('user')) || null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(!!token)
 
     useEffect(() => {
 

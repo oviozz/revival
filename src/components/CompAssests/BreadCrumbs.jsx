@@ -8,7 +8,7 @@ const Breadcrumbs = () => {
 
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Link to="/">Dashboard</Link>
+            <Link to="/" className={"hover:underline"}>Dashboard</Link>
             {pathnames.map((name, index) => {
                 const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
                 const isLast = index === pathnames.length - 1;
@@ -30,7 +30,7 @@ const Breadcrumbs = () => {
                         {isLast ? (
                             <span>{name}</span>
                         ) : (
-                            <Link to={routeTo}>{name}</Link>
+                            <Link className={"hover:underline"} to={routeTo}>{name}</Link>
                         )}
           </span>
                 );

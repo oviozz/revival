@@ -6,8 +6,6 @@ import {Navigate, Outlet} from "react-router-dom";
 const ProtectedLayout = () => {
 
     const {isAuthenticated, userInfo} = useAuth()
-    console.log(isAuthenticated)
-    console.log(userInfo)
 
     return (
         isAuthenticated ?

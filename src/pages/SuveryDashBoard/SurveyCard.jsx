@@ -3,12 +3,13 @@ import {FaClipboard} from "react-icons/fa6";
 import {LuBuilding2} from "react-icons/lu";
 import React from "react";
 import { Card } from 'flowbite-react';
+import {Link} from "react-router-dom";
 
 
 const SurveyCard = () => {
 
     return (
-        <div className={'border-2 px-5 py-3 pb-5 rounded-md'}>
+        <Link to={"/a/a"} className={'border-2 px-5 py-3 pb-5 rounded-md'}>
             <div className={"w-full"}>
 
                 <div className={"flex flex-col lg:flex-row justify-between"}>
@@ -46,7 +47,7 @@ const SurveyCard = () => {
             </div>
 
 
-        </div>
+        </Link>
     )
 
 

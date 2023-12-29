@@ -21,13 +21,13 @@ const NavBar = () => {
 
                 <IoNotifications size={25} className={"mr-2"}/>
 
-                <Link to={'/signin'} className="flex items-center font-semibold text-xl gap-x-2 hover:text-logoBlue sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
+                <Link onClick={deleteAuthToken} to={'/signin'} className="flex items-center font-semibold text-xl gap-x-2 hover:text-logoBlue sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
                    href="#">
                     <IoPersonSharp size={25}/>
                     {
                         isAuthenticated ?
                             <div>
-                                <button onClick={deleteAuthToken} >Log out</button>
+                                <button>Log out</button>
                             </div>
 
                             :
