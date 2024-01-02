@@ -5,7 +5,7 @@ import {createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup} 
 import {auth, provider} from "../auth/Config.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
 import {FireBaseError} from "../tools/FireBaseError.jsx";
-import {storeUserDB} from "../utils/storeUserDB.jsx";
+import {storeUserDB} from "../utils/UserUtil/storeUserDB.jsx";
 
 export const useSignup = () => {
 

@@ -5,34 +5,55 @@ import React, { useState } from 'react';
 import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { HiPlus } from 'react-icons/hi';
 import { BsBuildingFillAdd } from 'react-icons/bs';
+import {GenerateObjectID} from "../../tools/GenerateObjectID.jsx";
+import {GenerateCurrentDate} from "../../tools/GenerateCurrentDate.jsx";
+import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 
-function CreateProjectModal() {
+function CreateSurveyModal() {
 
+    const { addSurvey } = useSurveysContext();
     const [openModal, setOpenModal] = useState(false);
-    const [projectName, setProjectName] = useState('');
-    const [clientName, setClientName] = useState('');
+
+    const [survey, setSurvey] = useState({
+        _id: GenerateObjectID(),
+        surveyName: '',
+        surveyType: "Survey",
+        buildingImage: [],
+        buildings: [],
+        lastUpdated: GenerateCurrentDate()
+    })
 
     function onCloseModal() {
         setOpenModal(false);
-        setProjectName('');
-        setClientName('');
+        setSurvey({
+            _id: GenerateObjectID(),
+            surveyName: '',
+            surveyType: "Survey",
+            buildingImage: [],
+            buildings: [],
+            lastUpdated: GenerateCurrentDate()
+        })
+    }
+
+    function handleInputChange(event) {
+
+        const { name, value } = event.target;
+
+        setSurvey((prevSurvey) => ({
+            ...prevSurvey,
+            [name]: value,
+        }));
     }
 
     function onCreateProject() {
 
-        if (projectName.trim() === '' || clientName.trim() === '') {
-            alert('Please fill out both project name and client name.');
-            return;
-        }
-
-        const newProject = {
-            projectName,
-            clientName,
-        };
-
+        addSurvey(survey)
 
         onCloseModal();
     }
+
+    const isButtonDisabled = survey.surveyName.trim() === '';
+
 
     return (
         <>
@@ -55,17 +76,18 @@ function CreateProjectModal() {
                                 <Label htmlFor="projectName" value="Survey Name" />
                             </div>
                             <TextInput
-                                id="projectName"
+                                name={'surveyName'}
+                                id="surveyName"
                                 placeholder="Type a survey name"
-                                value={projectName}
-                                onChange={(event) => setProjectName(event.target.value)}
+                                value={survey.surveyName}
+                                onChange={handleInputChange}
                                 required
                             />
                         </div>
 
 
                         <div className="w-full">
-                            <Button className={"bg-logoBlue"} onClick={onCreateProject}>
+                            <Button disabled={isButtonDisabled} className={"bg-logoBlue"} onClick={onCreateProject}>
                                 <HiPlus size={20} className={'mr-2'} />
                                 Create Survey
                             </Button>
@@ -77,4 +99,4 @@ function CreateProjectModal() {
     );
 }
 
-export default CreateProjectModal;
+export default CreateSurveyModal;

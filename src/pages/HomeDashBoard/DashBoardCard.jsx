@@ -5,15 +5,15 @@ import {Link} from "react-router-dom";
 
 function DashBoardCard({project}){
 
-    const {projectName, clientName, extraInfo, lastUpdated} = project;
+    const {projectName, clientName, extraInfo, lastUpdated, _id} = project;
 
     const handleToolMenuClick = (e) => {
         e.preventDefault();
     };
 
     return (
-        <Link to={"/a"}>
-            <Card className="hover:bg-gray-100 relative lg:min-w-[470px] h-[175px] shadow-none border-2 md:w-full">
+        <Link to={`/${_id}`}>
+            <Card className="hover:bg-gray-100 relative lg:min-w-[470px] lg:max-w-[470px] min-h-[175px] shadow-none border-2 md:w-full">
 
                 <div className={"absolute top-0 right-0"} onClick={handleToolMenuClick}>
                     <CardToolMenu project={project}/>

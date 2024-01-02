@@ -1,5 +1,5 @@
 
-export const updateUserData = async (projectID, updateData) => {
+export const updateProjectData = async (projectID, updateData) => {
     try {
         const response = await fetch(`https://propertyestate.vercel.app/updateProject?project_id=${projectID}`, {
             method: 'POST',

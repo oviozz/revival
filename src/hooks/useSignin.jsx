@@ -5,7 +5,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 import {signInWithEmailAndPassword, signInWithPopup, getAdditionalUserInfo, signOut} from "firebase/auth";
 import {auth, provider} from "../auth/Config.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
-import {storeUserDB} from "../utils/storeUserDB.jsx";
+import {storeUserDB} from "../utils/UserUtil/storeUserDB.jsx";
 
 export const useSignin = () => {
 

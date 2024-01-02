@@ -1,17 +1,17 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createUserData } from "../utils/createUserData.jsx";
-import { deleteUserData } from "../utils/deleteUserData.jsx";
-import { updateUserData } from "../utils/updateUserData.jsx";
+import { addProjectData } from "../utils/HomeUtil/addProjectData.jsx";
+import {deleteProjectData} from "../utils/HomeUtil/deleteProjectData.jsx";
+import { updateProjectData } from "../utils/HomeUtil/updateProjectData.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
 
-const UserProjectsContext = createContext();
+const ProjectsContext = createContext();
 
-export const useUserProjectsContext = () => {
-    return useContext(UserProjectsContext);
+export const useProjectsContext = () => {
+    return useContext(ProjectsContext);
 };
 
-export const UserProjectsProvider = ({ children }) => {
+export const ProjectsProvider = ({ children }) => {
 
     const { userInfo } = useAuth();
     const userID = userInfo.uid;
@@ -34,7 +34,7 @@ export const UserProjectsProvider = ({ children }) => {
             const addProject = { ...newProject, userID: userID };
             setUserProjects((prevProject) => [...prevProject, addProject]);
 
-            await createUserData(addProject, userID);
+            await addProjectData(addProject, userID);
 
             showSuccessAlert('Project has been successfully added!');
         } catch (error) {
@@ -48,7 +48,7 @@ export const UserProjectsProvider = ({ children }) => {
                 prevProjects.filter((project) => project._id !== projectID)
             );
 
-            await deleteUserData(projectID, userID);
+            await deleteProjectData(projectID, userID);
 
             showSuccessAlert('Project has been successfully deleted!');
         } catch (error) {
@@ -65,7 +65,7 @@ export const UserProjectsProvider = ({ children }) => {
                 )
             );
 
-            await updateUserData(projectID, updateData);
+            await updateProjectData(projectID, updateData);
 
             showSuccessAlert('Project has been successfully updated!');
 
@@ -111,8 +111,8 @@ export const UserProjectsProvider = ({ children }) => {
     };
 
     return (
-        <UserProjectsContext.Provider value={contextValue}>
+        <ProjectsContext.Provider value={contextValue}>
             {children}
-        </UserProjectsContext.Provider>
+        </ProjectsContext.Provider>
     );
 };

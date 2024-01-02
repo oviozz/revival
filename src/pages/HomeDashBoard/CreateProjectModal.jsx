@@ -4,16 +4,13 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { HiPlus } from 'react-icons/hi';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import {GenerateObjectID} from "../../tools/GenerateObjectID.jsx";
-import {useUserProjectsContext} from "../../hooks/useUserProjectsContext.jsx";
+import {useProjectsContext} from "../../hooks/useProjectsContext.jsx";
+import {GenerateCurrentDate} from "../../tools/GenerateCurrentDate.jsx";
 
-function getCurrentDate() {
-    const currentDate = new Date();
-    return `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()}`;
-}
 
-function CreateProjectModal() {
+function CreateProjectModal({projectLoad}) {
 
-    const {addProject} = useUserProjectsContext();
+    const {addProject} = useProjectsContext();
     const [openModal, setOpenModal] = useState(false);
 
     const [project, setProject] = useState(
@@ -24,7 +21,7 @@ function CreateProjectModal() {
             clientName: '' ,
             extraInfo: [],
             surveys: [],
-            lastUpdated: getCurrentDate()
+            lastUpdated: GenerateCurrentDate()
         }
     );
 
@@ -32,12 +29,12 @@ function CreateProjectModal() {
 
         setOpenModal(false);
         setProject({
-            _id: '',
+            _id: GenerateObjectID(),
             projectName: '',
             clientName: '',
             extraInfo: [],
             surveys: [],
-            lastUpdated: getCurrentDate(),
+            lastUpdated: GenerateCurrentDate(),
         });
     }
 
@@ -54,13 +51,6 @@ function CreateProjectModal() {
 
     function onCreateProject() {
 
-        console.log(project)
-
-        if (project.projectName.trim() === '' || project.clientName.trim() === '') {
-            alert('Please fill out both project name and client name.');
-            return;
-        }
-
         addProject(project);
 
         onCloseModal();
@@ -71,8 +61,7 @@ function CreateProjectModal() {
 
     return (
         <>
-
-            <Button className={"bg-logoBlue"} onClick={() => setOpenModal(true)}>
+            <Button disabled={projectLoad} className={"bg-logoBlue"} onClick={() => setOpenModal(true)}>
                 <BsBuildingFillAdd size={20} className={'mr-2'} />
                 Add new project
             </Button>

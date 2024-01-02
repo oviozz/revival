@@ -13,7 +13,8 @@ import Signup from "./pages/AuthPage/Signup.jsx";
 import FrogotPassword from "./pages/AuthPage/FrogotPassword.jsx";
 import {AuthProvider} from "./auth/AuthContext.jsx";
 import ProtectedLayout from "./pages/ProtectedPageLayout/ProtectedLayout.jsx";
-import {UserProjectsProvider} from "./hooks/useUserProjectsContext.jsx";
+import {ProjectsProvider} from "./hooks/useProjectsContext.jsx";
+import {SurveysProvider} from "./hooks/useSurveysContext.jsx";
 
 function App() {
     return (
@@ -27,11 +28,15 @@ function App() {
 
                     <Route element={<ProtectedLayout />}>
                         <Route path={"/"} element={
-                            <UserProjectsProvider>
+                            <ProjectsProvider>
                                 <HomeDashBoard />
-                            </UserProjectsProvider>
+                            </ProjectsProvider>
                         } />
-                        <Route path={"/:project"} element={<SurveyDashBoard />} />
+                        <Route path={"/:projectID"} element={
+                            <SurveysProvider>
+                                <SurveyDashBoard />
+                            </SurveysProvider>
+                        } />
                         <Route path={"/:project/:survey"} element={<BuildingDashBoard />} />
                     </Route>
                 </Routes>

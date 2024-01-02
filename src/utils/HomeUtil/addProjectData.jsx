@@ -1,6 +1,5 @@
 
-
-export const createUserData = async (data, userID) => {
+export const addProjectData = async (data, userID) => {
 
     try {
         const response = await fetch(`https://propertyestate.vercel.app/createProject?user_id=${userID}`, {
@@ -20,4 +19,3 @@ export const createUserData = async (data, userID) => {
         throw error;
     }
 }
-

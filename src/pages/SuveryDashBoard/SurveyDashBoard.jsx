@@ -7,9 +7,17 @@ import { FaClipboard } from "react-icons/fa6";
 import { LuBuilding2 } from "react-icons/lu";
 import SurveyCard from "./SurveyCard.jsx";
 import CreateSurveyModal from "./CreateSurveyModal.jsx";
+import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
+import ProjectLoader, {NoSurveyCard} from "../../components/CompAssests/ProjectLoader.jsx";
+import DashBoardCard from "../HomeDashBoard/DashBoardCard.jsx";
+import EmptyState from "../../components/CompAssests/EmptyState.jsx";
 
 
 const SurveyDashBoard = () => {
+
+    const { userSurveys, loading } = useSurveysContext();
+
+    const hasContent = userSurveys?.length > 0;
 
     return (
         <div className={''}>
@@ -27,7 +35,21 @@ const SurveyDashBoard = () => {
                     <CreateSurveyModal />
                 </div>
 
-                <SurveyCard />
+
+                {
+                    loading ?
+                        <ProjectLoader loadingState={loading} loaderType={'survey'} count={2}/>
+                        :
+                        !loading && hasContent ? (
+                            <ul className={"flex flex-col gap-7 mt-5"}>
+                                {userSurveys.map((surveyItem, index) => (
+                                    <SurveyCard key={index} survey={surveyItem}/>
+                                ))}
+                            </ul>
+                        ) : (
+                            <EmptyState title={"Surveys"} style={'mt-32'}/>
+                        )
+                }
 
             </div>
 

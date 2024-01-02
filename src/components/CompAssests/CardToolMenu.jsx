@@ -12,11 +12,12 @@ import MenuButton from '@mui/joy/MenuButton';
 import Dropdown from '@mui/joy/Dropdown';
 import EditProjectModal from "../../pages/HomeDashBoard/EditProjectModal.jsx";
 import {useState} from "react";
-import {useUserProjectsContext} from "../../hooks/useUserProjectsContext.jsx";
+import {useProjectsContext} from "../../hooks/useProjectsContext.jsx";
 
 export default function CardToolMenu({project}) {
 
-    const { deleteProject, updateProject } = useUserProjectsContext();
+
+    const { deleteProject, updateProject } = useProjectsContext();
     const [isEditModalOpen, setEditModalOpen] = useState(false);
 
     const openEditModal = () => {

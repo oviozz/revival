@@ -1,6 +1,6 @@
 
 
-export const deleteUserData = async (projectID, userID) => {
+export const deleteProjectData = async (projectID, userID) => {
 
     console.log('working')
     try {
