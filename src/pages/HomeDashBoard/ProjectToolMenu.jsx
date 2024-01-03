@@ -10,11 +10,11 @@ import Edit from '@mui/icons-material/Edit';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import MenuButton from '@mui/joy/MenuButton';
 import Dropdown from '@mui/joy/Dropdown';
-import EditProjectModal from "../../pages/HomeDashBoard/EditProjectModal.jsx";
+import EditProjectModal from "./EditProjectModal.jsx";
 import {useState} from "react";
 import {useProjectsContext} from "../../hooks/useProjectsContext.jsx";
 
-export default function CardToolMenu({project}) {
+export default function ProjectToolMenu({project}) {
 
 
     const { deleteProject, updateProject } = useProjectsContext();
@@ -42,12 +42,12 @@ export default function CardToolMenu({project}) {
             <Menu placement="bottom-end">
                 <MenuItem onClick={openEditModal}>
                     <Edit />
-                    <span className={"font-semibold"}>Edit Post</span>
+                    <span className={"font-semibold"}>Edit</span>
                 </MenuItem>
 
                 <div className={"flex gap-4 p-2 hover:bg-red-100 cursor-pointer"} onClick={deleteHandler}>
                     <DeleteForever className={'text-red-800'}/>
-                    <span className={"font-semibold text-red-800"}>Delete Post</span>
+                    <span className={"font-semibold text-red-800"}>Delete</span>
                 </div>
             </Menu>
 

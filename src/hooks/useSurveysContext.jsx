@@ -2,9 +2,10 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {ProjectsProvider} from "./useProjectsContext.jsx";
 import {useParams} from "react-router-dom";
-import {addProjectData} from "../utils/HomeUtil/addProjectData.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
-import {addSurveyData} from "../utils/SurveyUtil/addSurveyData.jsx";
+import {deleteData} from "../utils/GlobalUtil/deleteData.jsx";
+import {updateData} from "../utils/GlobalUtil/updateData.jsx";
+import {addData} from "../utils/GlobalUtil/addData.jsx";
 
 
 const SurveysContext = createContext();
@@ -72,7 +73,9 @@ export const SurveysProvider = ({children}) => {
                 user_id: userID,
                 project_id: projectID
             }
-            await addSurveyData(newProject, projectID, userID);
+
+            await addData('createSurvey', params, newProject, 'survey_id');
+
 
             showSuccessAlert('Project has been successfully added!');
         } catch (error) {
@@ -80,12 +83,55 @@ export const SurveysProvider = ({children}) => {
         }
     };
 
+    const updateSurvey = async (surveyID, updatedData) => {
+
+        try {
+            setUserSurveys((prevSurvey) =>
+                prevSurvey.map((survey) =>
+                    survey._id === surveyID ? { ...survey, ...updatedData } : survey
+                )
+            );
+
+            const params = {
+                survey_id: surveyID,
+            }
+
+            await updateData('updateSurvey', params , updatedData);
+
+            showSuccessAlert('Project has been successfully updated!');
+
+        } catch (error) {
+            console.error("Error updating project:", error);
+        }
+    };
+
+    const deleteSurvey = async (surveyID) => {
+        try {
+            setUserSurveys((prevSurvey) =>
+                prevSurvey.filter((survey) => survey._id !== surveyID)
+            );
+
+            const params = {
+                user_id: userID,
+                project_id: projectID,
+                survey_id: surveyID
+            }
+
+            await deleteData('deleteProject', params);
+
+            showSuccessAlert('Project has been successfully deleted!');
+        } catch (error) {
+            console.error("Error deleting project:", error);
+        }
+    };
 
 
     const contextValue = {
         userSurveys,
         loading,
-        addSurvey
+        addSurvey,
+        updateSurvey,
+        deleteSurvey
     }
 
 

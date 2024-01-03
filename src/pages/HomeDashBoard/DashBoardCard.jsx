@@ -1,7 +1,7 @@
 
 import { Card } from 'flowbite-react';
-import CardToolMenu from "../../components/CompAssests/CardToolMenu.jsx";
 import {Link} from "react-router-dom";
+import ProjectToolMenu from "./ProjectToolMenu.jsx";
 
 function DashBoardCard({project}){
 
@@ -16,7 +16,7 @@ function DashBoardCard({project}){
             <Card className="hover:bg-gray-100 relative lg:min-w-[470px] lg:max-w-[470px] min-h-[175px] shadow-none border-2 md:w-full">
 
                 <div className={"absolute top-0 right-0"} onClick={handleToolMenuClick}>
-                    <CardToolMenu project={project}/>
+                    <ProjectToolMenu project={project}/>
                 </div>
 
                 <h1 className={"font-medium lg:text-sm text-xs absolute bottom-0.5 right-1.5 text-gray-400 flex gap-1"}>

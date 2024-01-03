@@ -1,9 +1,9 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { addProjectData } from "../utils/HomeUtil/addProjectData.jsx";
-import {deleteProjectData} from "../utils/HomeUtil/deleteProjectData.jsx";
-import { updateProjectData } from "../utils/HomeUtil/updateProjectData.jsx";
 import {useAuth} from "../auth/AuthContext.jsx";
+import {deleteData} from "../utils/GlobalUtil/deleteData.jsx";
+import {updateData} from "../utils/GlobalUtil/updateData.jsx";
+import {addData} from "../utils/GlobalUtil/addData.jsx";
 
 const ProjectsContext = createContext();
 
@@ -34,7 +34,11 @@ export const ProjectsProvider = ({ children }) => {
             const addProject = { ...newProject, userID: userID };
             setUserProjects((prevProject) => [...prevProject, addProject]);
 
-            await addProjectData(addProject, userID);
+            const params = {
+                user_id: userID
+            }
+
+            await addData('createProject', params, newProject, 'project_id');
 
             showSuccessAlert('Project has been successfully added!');
         } catch (error) {
@@ -48,7 +52,12 @@ export const ProjectsProvider = ({ children }) => {
                 prevProjects.filter((project) => project._id !== projectID)
             );
 
-            await deleteProjectData(projectID, userID);
+            const params = {
+                project_id: projectID,
+                user_id: userID
+            }
+
+            await deleteData('deleteProject', params);
 
             showSuccessAlert('Project has been successfully deleted!');
         } catch (error) {
@@ -56,16 +65,20 @@ export const ProjectsProvider = ({ children }) => {
         }
     };
 
-    const updateProject = async (projectID, updateData) => {
+    const updateProject = async (projectID, updatedData) => {
 
         try {
             setUserProjects((prevProjects) =>
                 prevProjects.map((project) =>
-                    project._id === projectID ? { ...project, ...updateData } : project
+                    project._id === projectID ? { ...project, ...updatedData } : project
                 )
             );
 
-            await updateProjectData(projectID, updateData);
+            const params = {
+                project_id: projectID,
+            }
+
+            await updateData('updateProject', params , updatedData);
 
             showSuccessAlert('Project has been successfully updated!');
 

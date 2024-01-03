@@ -123,7 +123,7 @@ const ProjectLoader = ({loadingState, loaderType, count}) => {
         loadingState && (
             <ul className={"flex gap-7 mt-5  flex-wrap"}>
                 {[...Array(count)].map((_, index) => (
-                    <li key={index} className={loaderType === 'survey' && 'w-full'}>
+                    <li key={index} className={loaderType === 'survey' ? 'w-full': ""}>
                         {cardType[loaderType]}
                     </li>
                 ))}
