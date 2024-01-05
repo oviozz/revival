@@ -11,10 +11,13 @@ import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 import ProjectLoader, {NoSurveyCard} from "../../components/CompAssests/ProjectLoader.jsx";
 import DashBoardCard from "../HomeDashBoard/DashBoardCard.jsx";
 import EmptyState from "../../components/CompAssests/EmptyState.jsx";
+import {useLocation} from "react-router-dom";
 
 
 const SurveyDashBoard = () => {
 
+    const location = useLocation();
+    const projectName = new URLSearchParams(location.search).get("projectName");
     const { userSurveys, loading } = useSurveysContext();
 
     const hasContent = userSurveys?.length > 0;
@@ -28,7 +31,7 @@ const SurveyDashBoard = () => {
                 <div className={"flex lg:flex-row flex-col lg:justify-between lg:items-center "}>
 
                     <div className={'leading-10'}>
-                        <h1 className={'font-bold text-3xl'}>Texas Office Project</h1>
+                        <h1 className={'font-bold text-3xl'}>{projectName}</h1>
                         <h1 className={"font-medium ml-1"}>1 Survey, 1 Tour</h1>
                     </div>
 
@@ -50,7 +53,6 @@ const SurveyDashBoard = () => {
                             <EmptyState title={"Surveys"} style={'mt-32'}/>
                         )
                 }
-
             </div>
 
         </div>

@@ -6,7 +6,7 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { HiPlus } from 'react-icons/hi';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import {GenerateObjectID} from "../../tools/GenerateObjectID.jsx";
-import {GenerateCurrentDate} from "../../tools/GenerateCurrentDate.jsx";
+import {GenerateCurrentDateTime} from "../../tools/GenerateCurrentDate.jsx";
 import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 
 function CreateSurveyModal() {
@@ -20,7 +20,7 @@ function CreateSurveyModal() {
         surveyType: "Survey",
         buildingImage: [],
         buildings: [],
-        lastUpdated: GenerateCurrentDate()
+        lastUpdated: GenerateCurrentDateTime()
     })
 
     function onCloseModal() {
@@ -31,7 +31,7 @@ function CreateSurveyModal() {
             surveyType: "Survey",
             buildingImage: [],
             buildings: [],
-            lastUpdated: GenerateCurrentDate()
+            lastUpdated: GenerateCurrentDateTime()
         })
     }
 

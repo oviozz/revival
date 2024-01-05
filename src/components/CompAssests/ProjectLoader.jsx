@@ -82,7 +82,7 @@ export const NoSurveyCard = () => {
 
 const NoProjectCard = () => {
     return (
-        <Card variant="outlined" sx={{ width: 470, height:"175px", display: 'flex', gap: 2, border: '2px solid', color: 'rgb(229 231 235)' }}>
+        <Card variant="outlined" sx={{ maxWidth: 470, height:"175px", display: 'flex', gap: 2, border: '2px solid', color: 'rgb(229 231 235)' }}>
             <Typography>
                 <Skeleton>
                     Lorem ipsum is placeholder text commonly Lorem ipsum is placeholder
@@ -121,7 +121,7 @@ const ProjectLoader = ({loadingState, loaderType, count}) => {
 
     return (
         loadingState && (
-            <ul className={"flex gap-7 mt-5  flex-wrap"}>
+            <ul className={"flex gap-7 mt-5 flex-wrap"}>
                 {[...Array(count)].map((_, index) => (
                     <li key={index} className={loaderType === 'survey' ? 'w-full': ""}>
                         {cardType[loaderType]}

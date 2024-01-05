@@ -5,12 +5,12 @@ import { HiPlus } from 'react-icons/hi';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import {GenerateObjectID} from "../../tools/GenerateObjectID.jsx";
 import {useProjectsContext} from "../../hooks/useProjectsContext.jsx";
-import {GenerateCurrentDate} from "../../tools/GenerateCurrentDate.jsx";
+import { GenerateCurrentDateTime} from "../../tools/GenerateCurrentDate.jsx";
 
 
 function CreateProjectModal({projectLoad}) {
 
-    const {addProject} = useProjectsContext();
+    const {addProject, addProjectLoading} = useProjectsContext();
     const [openModal, setOpenModal] = useState(false);
 
     const [project, setProject] = useState(
@@ -21,7 +21,7 @@ function CreateProjectModal({projectLoad}) {
             clientName: '' ,
             extraInfo: [],
             surveys: [],
-            lastUpdated: GenerateCurrentDate()
+            lastUpdated: GenerateCurrentDateTime()
         }
     );
 
@@ -34,7 +34,7 @@ function CreateProjectModal({projectLoad}) {
             clientName: '',
             extraInfo: [],
             surveys: [],
-            lastUpdated: GenerateCurrentDate(),
+            lastUpdated: GenerateCurrentDateTime(),
         });
     }
 

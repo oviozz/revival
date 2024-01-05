@@ -5,6 +5,7 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { HiPlus } from 'react-icons/hi';
 import { GenerateObjectID } from '../../tools/GenerateObjectID.jsx';
 import Edit from '@mui/icons-material/Edit';
+import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 
 function getCurrentDate() {
     const currentDate = new Date();
@@ -43,7 +44,10 @@ function EditSurveyModal({ isOpen, onClose, surveyItem, editHandler }) {
 
         onCloseModal();
 
-        await editHandler(surveyItem._id, survey)
+        editHandler({
+            surveyID: survey._id,
+            updatedData: survey
+        })
     }
 
     const isButtonDisabled = survey.surveyName.trim() === '';

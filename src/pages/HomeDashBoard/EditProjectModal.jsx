@@ -4,6 +4,7 @@ import { Button, Label, Modal, TextInput } from 'flowbite-react';
 import { HiPlus } from 'react-icons/hi';
 import { GenerateObjectID } from '../../tools/GenerateObjectID.jsx';
 import Edit from '@mui/icons-material/Edit';
+import {useProjectsContext} from "../../hooks/useProjectsContext.jsx";
 
 function getCurrentDate() {
     const currentDate = new Date();
@@ -11,6 +12,7 @@ function getCurrentDate() {
 }
 
 function EditProjectModal({ isOpen, onClose, projectItem, editHandler }) {
+
 
     const [project, setProject] = useState({
         _id: projectItem._id,
@@ -43,7 +45,7 @@ function EditProjectModal({ isOpen, onClose, projectItem, editHandler }) {
 
         onCloseModal();
 
-        await editHandler(projectItem._id, project)
+        editHandler(project);
     }
 
     const isButtonDisabled = project.projectName.trim() === '' || project.clientName.trim() === '';

@@ -32,31 +32,33 @@ export default function ProjectToolMenu({project}) {
     }
 
     return (
-        <Dropdown>
-            <MenuButton
-                slots={{ root: IconButton }}
-                slotProps={{ root: { color: 'neutral' } }}
-            >
-                <MoreVert />
-            </MenuButton>
-            <Menu placement="bottom-end">
-                <MenuItem onClick={openEditModal}>
-                    <Edit />
-                    <span className={"font-semibold"}>Edit</span>
-                </MenuItem>
+        <>
+            <Dropdown>
+                <MenuButton
+                    slots={{ root: IconButton }}
+                    slotProps={{ root: { color: 'neutral' } }}
+                >
+                    <MoreVert />
+                </MenuButton>
+                <Menu placement="bottom-end">
+                    <MenuItem onClick={openEditModal}>
+                        <Edit />
+                        <span className={"font-semibold"}>Edit</span>
+                    </MenuItem>
 
-                <div className={"flex gap-4 p-2 hover:bg-red-100 cursor-pointer"} onClick={deleteHandler}>
-                    <DeleteForever className={'text-red-800'}/>
-                    <span className={"font-semibold text-red-800"}>Delete</span>
-                </div>
-            </Menu>
+                    <div className={"flex gap-4 p-2 hover:bg-red-100 cursor-pointer"} onClick={deleteHandler}>
+                        <DeleteForever className={'text-red-800'}/>
+                        <span className={"font-semibold text-red-800"}>Delete</span>
+                    </div>
+                </Menu>
 
-            <EditProjectModal
-                editHandler={updateProject}
-                isOpen={isEditModalOpen}
-                onClose={closeEditModal}
-                projectItem={project}
-            />
-        </Dropdown>
+                <EditProjectModal
+                    editHandler={updateProject}
+                    isOpen={isEditModalOpen}
+                    onClose={closeEditModal}
+                    projectItem={project}
+                />
+            </Dropdown>
+        </>
     );
 }
