@@ -10,11 +10,11 @@ import MoreVert from '@mui/icons-material/MoreVert';
 import Edit from '@mui/icons-material/Edit';
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import MenuButton from '@mui/joy/MenuButton';
-import Dropdown from '@mui/joy/Dropdown';
 import {useState} from "react";
 import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 import EditProjectModal from "../HomeDashBoard/EditProjectModal.jsx";
 import EditSurveyModal from "./EditSurveyModal.jsx";
+import { Dropdown } from 'flowbite-react';
 
 export default function SurveyToolMenu({survey}) {
 
@@ -33,25 +33,25 @@ export default function SurveyToolMenu({survey}) {
         await deleteSurvey(survey["_id"])
     }
 
-    return (
-        <Dropdown>
-            <MenuButton
-                slots={{ root: IconButton }}
-                slotProps={{ root: { color: 'neutral' } }}
-            >
-                <MoreVert />
-            </MenuButton>
-            <Menu placement="bottom-end">
-                <MenuItem onClick={openEditModal}>
-                    <Edit />
-                    <span className={"font-semibold"}>Edit</span>
-                </MenuItem>
+    const dropdownButton = (
+        <div className={"hover:bg-white p-1 rounded-md "}>
+            <MoreVert />
+        </div>
+    );
 
-                <div className={"flex gap-4 p-2 hover:bg-red-100 cursor-pointer"} onClick={deleteHandler}>
-                    <DeleteForever className={'text-red-800'}/>
-                    <span className={"font-semibold text-red-800"}>Delete</span>
-                </div>
-            </Menu>
+    return (
+        <>
+            <Dropdown renderTrigger={() => dropdownButton}>
+                <Dropdown.Item onClick={openEditModal} className={"flex gap-2 "}>
+                    <Edit />
+                    <span className={"font-semibold text-md"}>Edit</span>
+                </Dropdown.Item>
+
+                <Dropdown.Item onClick={deleteHandler} className={"flex gap-2 text-red-800"}>
+                    <DeleteForever />
+                    <span className={"font-semibold text-md"}>Delete</span>
+                </Dropdown.Item>
+            </Dropdown>
 
             <EditSurveyModal
                 editHandler={updateSurvey}
@@ -59,7 +59,6 @@ export default function SurveyToolMenu({survey}) {
                 onClose={closeEditModal}
                 surveyItem={survey}
             />
-
-        </Dropdown>
+        </>
     );
 }

@@ -11,7 +11,7 @@ const NavBar = () => {
     const {token, userInfo, setAuthToken, deleteAuthToken, isAuthenticated} = useAuth();
 
     return (
-        <div className={"flex justify-between items-center px-5 py-1.5 border-b-2"}>
+        <div className={"flex justify-between items-center px-5 py-1 border-b-2"}>
 
             <Link to={'/'}>
                 <NavBarLogo />
@@ -19,19 +19,21 @@ const NavBar = () => {
 
             <div className={"flex items-center gap-2"}>
 
-                <IoNotifications size={25} className={"mr-2"}/>
+                {
+                    isAuthenticated ? <IoNotifications size={25} className={"mr-2"}/> : null
+                }
 
-                <Link onClick={deleteAuthToken} to={'/signin'} className="flex items-center font-semibold text-xl gap-x-2 hover:text-logoBlue sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
+                <Link onClick={deleteAuthToken} to={'/signin'} className="flex items-center  sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
                    href="#">
-                    <IoPersonSharp size={25}/>
                     {
                         isAuthenticated ?
                             <div>
-                                <button>Log out</button>
+                                <button className={'font-semibold text-xl text-gray-900'}>Log out</button>
                             </div>
 
                             :
-                            "Sign in"
+                                <button className={'font-semibold text-xl text-gray-900'}>Sign in</button>
+
                     }
                 </Link>
 

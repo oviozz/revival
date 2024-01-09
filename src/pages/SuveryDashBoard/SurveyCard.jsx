@@ -8,19 +8,21 @@ import EmptyState from "../../components/CompAssests/EmptyState.jsx";
 import { BsBuildingSlash } from "react-icons/bs";
 import ProjectToolMenu from "../HomeDashBoard/ProjectToolMenu.jsx";
 import SurveyToolMenu from "./SurveyToolMenu.jsx";
+import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 
 
 
 const SurveyCard = ({survey}) => {
 
-    const {_id, surveyName, surveyType, lastUpdated, buildings, buildingImage} = survey;
+    const {_id, surveyName, surveyType, lastUpdated, buildings, buildingImage, isError} = survey;
+    const surveysContext = useSurveysContext();
 
     const handleToolMenuClick = (e) => {
         e.preventDefault();
     };
 
     return (
-        <Link to={"/a/a"} className={'relative border-2 pl-5 pr-2 py-3 pb-5 rounded-md hover:bg-gray-100'}>
+        <Link to={"/a/a"} className={`${isError ? "border-red-500 bg-red-300" : 'hover:bg-gray-100'} relative border-2 pl-5 pr-2 py-3 pb-5 rounded-md`} onClick={isError ? handleToolMenuClick : null}>
             <div className={"w-full"}>
 
                 <div className={"lg:hidden absolute top-0 right-0"} onClick={handleToolMenuClick}>

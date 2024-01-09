@@ -16,11 +16,11 @@ import {useLocation} from "react-router-dom";
 
 const SurveyDashBoard = () => {
 
-    const location = useLocation();
-    const projectName = new URLSearchParams(location.search).get("projectName");
-    const { userSurveys, loading } = useSurveysContext();
-
+    const { userSurveys, projectName, loading, error,  } = useSurveysContext();
     const hasContent = userSurveys?.length > 0;
+
+
+    {console.log(userSurveys)}
 
     return (
         <div className={''}>
@@ -32,7 +32,7 @@ const SurveyDashBoard = () => {
 
                     <div className={'leading-10'}>
                         <h1 className={'font-bold text-3xl'}>{projectName}</h1>
-                        <h1 className={"font-medium ml-1"}>1 Survey, 1 Tour</h1>
+                        <h1 className={"font-medium ml-1"}>{userSurveys?.length } Survey</h1>
                     </div>
 
                     <CreateSurveyModal />
