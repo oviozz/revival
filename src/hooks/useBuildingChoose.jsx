@@ -14,7 +14,7 @@ const BuildingChooseProvider = ({ children }) => {
     const { survey } = useParams();
 
     const saveBuildingtoDB = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/createBuilding?survey_id=${survey}`, {
+        const response = await fetch(`https://propertyestate.vercel.app/createBuilding?survey_id=${survey}`, {
             headers: {
                 'Content-Type': 'application/json',
             },
