@@ -22,7 +22,7 @@ const SurveyCard = ({survey}) => {
     };
 
     return (
-        <Link to={"/a/a"} className={`${isError ? "border-red-500 bg-red-300" : 'hover:bg-gray-100'} relative border-2 pl-5 pr-2 py-3 pb-5 rounded-md`} onClick={isError ? handleToolMenuClick : null}>
+        <Link to={`${_id}`} className={`${isError ? "border-red-500 bg-red-300" : 'hover:bg-gray-100'} relative border-2 pl-5 pr-2 py-3 pb-5 rounded-md`} onClick={isError ? handleToolMenuClick : null}>
             <div className={"w-full"}>
 
                 <div className={"lg:hidden absolute top-0 right-0"} onClick={handleToolMenuClick}>

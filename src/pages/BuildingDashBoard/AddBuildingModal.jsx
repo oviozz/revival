@@ -1,39 +1,84 @@
-import React, {useState} from 'react';
-import {Button, Label, TextInput} from 'flowbite-react';
+
+import React, {useState, useEffect, useRef} from 'react';
+import {Button, Pagination, Tabs} from 'flowbite-react';
 import Modal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
-import {HiPlus} from 'react-icons/hi';
 import {BsBuildingFillAdd} from 'react-icons/bs';
-import {ModalDialog} from "@mui/joy";
-import {IoSearch} from "react-icons/io5";
+import {List, ModalDialog} from "@mui/joy";
+import BuildingModalCard from "./BuildingModalCard.jsx";
+import BuildingCardSkeleton from "./BuildingCardSkeleton.jsx";
+import parseAddress from "../../utils/GlobalUtil/parseAddress.jsx";
+import BuildingDetailPage from "./BuildingDetailPage.jsx";
+import BuildingEditConfirmPage from "./BuildingEditConfirmPage.jsx";
+import EmptyState from "../../components/CompAssests/EmptyState.jsx";
+import {FaExclamationCircle} from "react-icons/fa";
+import {Link} from "react-router-dom";
+import {MdOutlineKeyboardArrowRight} from "react-icons/md";
 
 function AddBuildingModal() {
 
+    const tabsRef = useRef(null);
+    const [activeTab, setActiveTab] = useState(0);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const onPageChange = (page) => setCurrentPage(page);
+
+    const [maxPage, setMaxPage] = useState(0)
     const [openModal, setOpenModal] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [buildingData, setBuildingData] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
+    const [fullAddress, setFullAddress] = useState('690 Alameda St, Los Angeles, CA');
+    const [error, setError] = useState(false)
 
-    const [projectName, setProjectName] = useState('');
-    const [clientName, setClientName] = useState('');
+    useEffect(() => {
+        setError(false)
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const {city, state, zipcode} = parseAddress(fullAddress);
 
-    function onCloseModal() {
-        setOpenModal(false);
-        setProjectName('');
-        setClientName('');
-    }
+                const url = `https://socalwarehousesapi.vercel.app/getcombineddata?zipcode=${zipcode}&city=${city}&state=${state}&page=${currentPage}`;
+                const response = await fetch(url);
 
-    function onCreateProject() {
+                if (response.status === 500) {
+                    setError(true)
+                }
 
-        if (projectName.trim() === '' || clientName.trim() === '') {
-            alert('Please fill out both project name and client name.');
-            return;
-        }
+                const data = await response.json();
 
-        const newProject = {
-            projectName,
-            clientName,
+                if (data.propertyData.length > 0) {
+                    setMaxPage(data.maxPage)
+                    setBuildingData(data.propertyData);
+                }
+
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
         };
 
-        onCloseModal();
-    }
+        if (fullAddress) {
+            fetchData();
+        }
+    }, [fullAddress, currentPage]);
+
+    const onCloseModal = () => {
+        setOpenModal(false);
+        setCurrentPage(1);
+
+    };
+
+    const handleInputChange = (e) => {
+        setSearchInput(prevState => e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        console.log(searchInput)
+        setFullAddress(searchInput);
+    };
 
     return (
         <>
@@ -42,77 +87,115 @@ function AddBuildingModal() {
                 Add Building
             </Button>
 
-            <Modal open={openModal} onClose={onCloseModal} popup>
+            <Modal open={openModal} onClose={onCloseModal} popup="true">
                 <ModalDialog layout={'fullscreen'}>
+                    <ModalClose variant="solid"/>
 
-                    <ModalClose variant="plain"/>
+                    <List
+                        sx={{
+                            overflowY: 'scroll',
+                        }}
+                    >
+                        <Tabs aria-label="Default tabs" style="default" ref={tabsRef}
+                              onActiveTabChange={(tab) => setActiveTab(tab)}>
+                            <Tabs.Item active title="Find Buildings">
+                                {
+                                    error ?
+                                        (
+                                            <div className={"text-5xl text-center text-gray-300"}>
+                                                Failed to Fetch
+                                            </div>
+                                        ) :
+                                        (
+                                            <div className={""}>
+                                                <form className="flex items-center" onSubmit={handleSearchSubmit}>
+                                                    <label htmlFor="simple-search" className="sr-only">Search</label>
+                                                    <div className="relative lg:w-1/3 w-3/4">
+                                                        <div
+                                                            className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                                                                      strokeWidth="2"
+                                                                      d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"/>
+                                                            </svg>
+                                                        </div>
+                                                        <input type="text" id="simple-search"
+                                                               className="bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                               placeholder="Search branch name..." value={searchInput}
+                                                               onChange={handleInputChange} required/>
+                                                    </div>
+                                                    <button type="submit"
+                                                            className="p-2.5 ms-2 text-sm font-medium text-white bg-[#146CA3] rounded-lg border border-blue-700 hover:bg-[#146CA3] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                             fill="none"
+                                                             viewBox="0 0 20 20">
+                                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                                                                  strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                                        </svg>
+                                                        <span className="sr-only">Search</span>
+                                                    </button>
+                                                </form>
 
+                                                {loading ? (
+                                                    <ul className={"p-2 flex flex-wrap gap-5 mt-5"}>
+                                                        {Array.from({length: 10}, (_, index) => (
+                                                            <BuildingCardSkeleton key={index}/>
+                                                        ))}
+                                                    </ul>
+                                                ) : (
+                                                    <>
+                                                        <div className={"p-2 flex flex-wrap gap-5 mt-5 "}>
+                                                            {buildingData.map(building => (
+                                                                <BuildingModalCard
+                                                                    addBuilding={() => tabsRef.current?.setActiveTab(1)}
+                                                                    key={building.ID}
+                                                                    building={building}/>
+                                                            ))}
+                                                        </div>
 
-                    <form className="flex items-center">
-                        <label htmlFor="simple-search" className="sr-only">Search</label>
-                        <div className="relative w-3/4">
-                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"/>
-                                </svg>
-                            </div>
-                            <input type="text" id="simple-search"
-                                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   placeholder="Search branch name..." required />
-                        </div>
-                        <button type="submit"
-                                className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
-                            <span className="sr-only">Search</span>
-                        </button>
-                    </form>
+                                                        <div className={"lg:block hidden"}>
+                                                            <div className={`flex flex-col items-center mt-3`}>
+                                                                <Pagination currentPage={currentPage} totalPages={maxPage}
+                                                                            onPageChange={onPageChange} showIcons/>
+                                                            </div>
+                                                        </div>
 
+                                                        <div className={"lg:hidden block"}>
+                                                            <div className={`flex flex-col items-center mt-3`}>
+                                                                <Pagination layout="table" currentPage={currentPage}
+                                                                            totalPages={maxPage} onPageChange={onPageChange} showIcons/>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        )
+                                }
+                            </Tabs.Item>
 
-                    <div className="space-y-6 mt-5">
-                        <div className={"lg:pl-1 flex flex-wrap gap-12"}>
-
-                            <div
-                                className="lg:max-w-xs w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                <a href="#">
-                                    <img className="rounded-t-lg"
-                                         src="https://flowbite.com/docs/images/blog/image-1.jpg" alt=""/>
-                                </a>
-
-                                <div className="p-5">
-
-                                    <a href="#">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                                            technology acquisitions 2021</h5>
-                                    </a>
-
-                                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the
-                                        biggest enterprise technology acquisitions of 2021 so far, in reverse
-                                        chronological order.</p>
-
-                                    <a href="#"
-                                       className="w-full inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        Add building
-                                        <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
-                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                                  strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                                        </svg>
-                                    </a>
+                            <Tabs.Item disabled title="Page Detail">
+                                <div className={""}>
+                                    <BuildingDetailPage tabFowardAction={() => tabsRef.current?.setActiveTab(2)}/>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                            </Tabs.Item>
+
+                            <Tabs.Item disabled title="Add Building">
+                                <div className={""}>
+                                    Tab 3
+                                </div>
+
+                                {/*<BuildingEditConfirmPage />*/}
+                            </Tabs.Item>
+
+                        </Tabs>
+                    </List>
+
+
                 </ModalDialog>
             </Modal>
         </>
-);
+    );
 }
 
 export default AddBuildingModal;

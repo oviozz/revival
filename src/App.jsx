@@ -15,6 +15,7 @@ import {AuthProvider} from "./auth/AuthContext.jsx";
 import ProtectedLayout from "./pages/ProtectedPageLayout/ProtectedLayout.jsx";
 import {ProjectsProvider} from "./hooks/useProjectsContext.jsx";
 import {SurveysProvider} from "./hooks/useSurveysContext.jsx";
+import {BuildingChooseProvider} from "./hooks/useBuildingChoose.jsx";
 
 function App() {
     return (
@@ -37,7 +38,11 @@ function App() {
                                 <SurveyDashBoard />
                             </SurveysProvider>
                         } />
-                        <Route path={"/:project/:survey"} element={<BuildingDashBoard />} />
+                        <Route path={"/:project/:survey"} element={
+                            <BuildingChooseProvider>
+                                <BuildingDashBoard />
+                            </BuildingChooseProvider>
+                        } />
                     </Route>
                 </Routes>
             </NavBarLayout>

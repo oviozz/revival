@@ -2,7 +2,7 @@
 import Breadcrumbs from "../../components/CompAssests/BreadCrumbs.jsx";
 import {BsBuildingFillAdd} from "react-icons/bs";
 import {Button} from "flowbite-react";
-import React from "react";
+import React, {useEffect} from "react";
 import { FaClipboard } from "react-icons/fa6";
 import { LuBuilding2 } from "react-icons/lu";
 import SurveyCard from "./SurveyCard.jsx";
@@ -11,7 +11,9 @@ import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
 import ProjectLoader, {NoSurveyCard} from "../../components/CompAssests/ProjectLoader.jsx";
 import DashBoardCard from "../HomeDashBoard/DashBoardCard.jsx";
 import EmptyState from "../../components/CompAssests/EmptyState.jsx";
-import {useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
+import { FaExclamationCircle } from 'react-icons/fa';
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 
 const SurveyDashBoard = () => {
@@ -20,7 +22,20 @@ const SurveyDashBoard = () => {
     const hasContent = userSurveys?.length > 0;
 
 
-    {console.log(userSurveys)}
+    if (error) {
+        return (
+            <div className="flex flex-col justify-center items-center h-[calc(100vh-150px)] gap-3">
+                <FaExclamationCircle className="text-gray-300 text-5xl" />
+                <h1 className="text-3xl text-center font-semibold text-gray-300">No Project Found.</h1>
+                <Link to="/">
+                    <button className="flex items-center bg-gray-200 font-semibold text-gray-400 px-4 py-2 rounded-md text-xl">
+                        Go home  <MdOutlineKeyboardArrowRight size={30} />
+                    </button>
+                </Link>
+            </div>
+        );
+    }
+
 
     return (
         <div className={''}>

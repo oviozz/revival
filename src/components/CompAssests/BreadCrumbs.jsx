@@ -13,7 +13,7 @@ const Breadcrumbs = () => {
                 const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
                 const isLast = index === pathnames.length - 1;
                 return (
-                    <span key={name} style={{ display: 'flex', alignItems: 'center' }}>
+                    <span key={index} style={{ display: 'flex', alignItems: 'center' }}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4 inline-block mx-2"

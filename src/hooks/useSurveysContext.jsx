@@ -1,7 +1,7 @@
 
 import {createContext, useContext, useEffect, useState} from "react";
 import {ProjectsProvider} from "./useProjectsContext.jsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useAuth} from "../auth/AuthContext.jsx";
 import {deleteData} from "../utils/GlobalUtil/deleteData.jsx";
 import {updateData} from "../utils/GlobalUtil/updateData.jsx";
@@ -18,9 +18,11 @@ export const useSurveysContext = () => {
 };
 
 const fetchProjectSurvey = async (projectID, userID) => {
+
     const response = await fetch(
         `https://propertyestate.vercel.app/getProjectSurveys?project_id=${projectID}&user_id=${userID}`
     );
+
     const data = await response.json();
     if (data.error) {
         throw new Error(data.error);
@@ -30,8 +32,6 @@ const fetchProjectSurvey = async (projectID, userID) => {
         surveys: data.surveys,
     };
 };
-
-
 
 export const SurveysProvider = ({children}) => {
 
@@ -52,7 +52,8 @@ export const SurveysProvider = ({children}) => {
     const { data: userSurveys = [], isLoading: loading, isError: error } = useQuery({
         queryKey: ['surveys', projectID, { userID }],
         queryFn: () => fetchProjectSurvey(projectID, userID),
-        enabled: !!projectID
+        enabled: !!projectID,
+        retry: false
     })
 
     const addSurvey = async (newSurvey) => {
@@ -160,6 +161,7 @@ export const SurveysProvider = ({children}) => {
         projectName: userSurveys.projectName,
         userSurveys: userSurveys.surveys || [],
         loading,
+        error,
         addSurvey: addSurveyMutation,
         updateSurvey: updateSurveyMutation,
         deleteSurvey: deleteSurveyMutation
