@@ -16,13 +16,24 @@ import ProtectedLayout from "./pages/ProtectedPageLayout/ProtectedLayout.jsx";
 import {ProjectsProvider} from "./hooks/useProjectsContext.jsx";
 import {SurveysProvider} from "./hooks/useSurveysContext.jsx";
 import {BuildingChooseProvider} from "./hooks/useBuildingChoose.jsx";
+import HomePage from "./pages/HomeClientPage/HomePage.jsx";
+import HomeDetailPage from "./pages/HomeClientPage/HomeDetailPage.jsx";
 
 function App() {
     return (
         <AuthProvider>
             <NavBarLayout>
                 <Routes>
-                    <Route path={"/home"} element={<h1>Not Logged in</h1>} />
+                    <Route path={"/home"} element={
+                        <BuildingChooseProvider>
+                            <HomePage />
+                        </BuildingChooseProvider>
+                    } />
+                    <Route path={"/home/detail"} element={
+                        <BuildingChooseProvider>
+                            <HomeDetailPage />
+                        </BuildingChooseProvider>
+                    } />
                     <Route path={'/signin'} element={<Signin />} />
                     <Route path={'/signup'} element={<Signup />} />
                     <Route path={'/frogot'} element={<FrogotPassword />} />

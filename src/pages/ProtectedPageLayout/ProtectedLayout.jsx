@@ -14,7 +14,6 @@ const ProtectedLayout = () => {
             <Navigate to={"/home"} />
     )
 
-
 }
 
 export default ProtectedLayout;
