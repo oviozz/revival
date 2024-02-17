@@ -41,7 +41,10 @@ const SurveyDashBoard = () => {
         <div className={''}>
 
             <div className={"flex flex-col gap-5"}>
-                <Breadcrumbs />
+
+                <div className={"lg:block hidden"}>
+                    <Breadcrumbs />
+                </div>
 
                 <div className={"flex lg:flex-row flex-col lg:justify-between lg:items-center "}>
 

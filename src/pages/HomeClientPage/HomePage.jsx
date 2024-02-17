@@ -1,5 +1,6 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import BuildingCardClient from "./BuildingCardClient.jsx";
+import Loader from "../../components/CompAssests/Loader.jsx";
 
 
 export default function HomePage(){
@@ -38,7 +39,7 @@ export default function HomePage(){
     }, [currentPage]); // re-run the effect when currentPage changes
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loader loadingState={loading} /> ;
     }
 
     return (

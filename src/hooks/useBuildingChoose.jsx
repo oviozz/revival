@@ -2,28 +2,40 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {GenerateObjectID} from "../tools/GenerateObjectID.jsx";
+import {QueryClient, useQueryClient} from "@tanstack/react-query";
+import {useAuth} from "../auth/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 const BuildingChooseContext = createContext();
 
 const BuildingChooseProvider = ({ children }) => {
 
+    const {userInfo} = useAuth();
+    const queryClient = useQueryClient()
+
     const [cardChosenData, setcardChosenData] = useState(null)
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { survey } = useParams();
+    const { surveyID } = useParams();
 
     const saveBuildingtoDB = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/createBuilding?survey_id=${survey}`, {
+
+        const response = await fetch(`https://propertyestate.vercel.app/createBuilding?survey_id=${surveyID}`, {
             headers: {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            body: JSON.stringify({...data["buildingDetail"], _id: GenerateObjectID()})
+            body: JSON.stringify({...data["buildingDetail"], _id: GenerateObjectID(), userID: userInfo.uid})
         });
 
-        console.log(await response.json())
+        queryClient.invalidateQueries({ queryKey: ['buildingData', {surveyID}] })
+        toast.success("Building has been added")
 
+    }
+
+    const setChooseData = (cardChosenData) => {
+        setcardChosenData(JSON.stringify(cardChosenData));
     }
 
     const fetchBuildingData = async (id, cardChosenData) => {

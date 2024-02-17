@@ -51,9 +51,6 @@ export default function HomeDetailPage() {
                         </section>
                     </div>
 
-                    <button onClick={saveBuildingtoDB} className={"flex gap-2 items-center bg-logoBlue text-white font-semibold text-xl rounded-md p-2 lg:mr-5 hover:bg-logoHover"}>
-                        Add Building <FaBuildingCircleArrowRight size={20}/>
-                    </button>
                 </div>
 
                 <section className="mb-8  bg-white rounded-lg">

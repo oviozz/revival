@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaDollarSign, FaBuilding, FaLandmark } from "react-icon
 import {useBuildingChoose} from "../../hooks/useBuildingChoose.jsx";
 
 function BuildingModalCard({ building, addBuilding }) {
+
     const { ID, Address, "Building Info": buildingInfo, "Image URL": imageUrl, Title, Price } = building;
     const { fetchBuildingData } = useBuildingChoose();
 

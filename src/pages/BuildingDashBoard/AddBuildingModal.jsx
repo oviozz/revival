@@ -76,7 +76,6 @@ function AddBuildingModal() {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        console.log(searchInput)
         setFullAddress(searchInput);
     };
 

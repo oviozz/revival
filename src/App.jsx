@@ -18,6 +18,7 @@ import {SurveysProvider} from "./hooks/useSurveysContext.jsx";
 import {BuildingChooseProvider} from "./hooks/useBuildingChoose.jsx";
 import HomePage from "./pages/HomeClientPage/HomePage.jsx";
 import HomeDetailPage from "./pages/HomeClientPage/HomeDetailPage.jsx";
+import {Toaster} from "react-hot-toast";
 
 function App() {
     return (
@@ -49,13 +50,14 @@ function App() {
                                 <SurveyDashBoard />
                             </SurveysProvider>
                         } />
-                        <Route path={"/:project/:survey"} element={
+                        <Route path={"/:projectID/:surveyID"} element={
                             <BuildingChooseProvider>
                                 <BuildingDashBoard />
                             </BuildingChooseProvider>
                         } />
                     </Route>
                 </Routes>
+                <Toaster position="bottom-right" reverseOrder={false}/>
             </NavBarLayout>
         </AuthProvider>
     )
