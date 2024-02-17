@@ -20,12 +20,8 @@ const BuildingChooseProvider = ({ children }) => {
     const { surveyID } = useParams();
 
     const saveBuildingtoDB = async () => {
-<<<<<<< HEAD
 
         const response = await fetch(`https://propertyestate.vercel.app/createBuilding?survey_id=${surveyID}`, {
-=======
-        const response = await fetch(`https://propertyestate.vercel.app/createBuilding?survey_id=${survey}`, {
->>>>>>> bdf70fac3d88e3e783d14c32315889430b7c6d8b
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -38,9 +34,6 @@ const BuildingChooseProvider = ({ children }) => {
 
     }
 
-    const setChooseData = (cardChosenData) => {
-        setcardChosenData(JSON.stringify(cardChosenData));
-    }
 
     const fetchBuildingData = async (id, cardChosenData) => {
 
