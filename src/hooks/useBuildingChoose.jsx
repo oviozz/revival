@@ -26,7 +26,7 @@ const BuildingChooseProvider = ({ children }) => {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            body: JSON.stringify({...data["buildingDetail"], _id: GenerateObjectID(), userID: userInfo.uid})
+            body: JSON.stringify({...data["buildingDetail"], _id: GenerateObjectID(), userID: userInfo.uid, favorite: false})
         });
 
         queryClient.invalidateQueries({ queryKey: ['buildingData', {surveyID}] })

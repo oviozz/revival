@@ -2,7 +2,7 @@
 import Breadcrumbs from "../../components/CompAssests/BreadCrumbs.jsx";
 import {BsBuildingFillAdd} from "react-icons/bs";
 import {Button} from "flowbite-react";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { FaClipboard } from "react-icons/fa6";
 import { LuBuilding2 } from "react-icons/lu";
 import SurveyCard from "./SurveyCard.jsx";
@@ -14,13 +14,16 @@ import EmptyState from "../../components/CompAssests/EmptyState.jsx";
 import {Link} from "react-router-dom";
 import { FaExclamationCircle } from 'react-icons/fa';
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import {useAuth} from "../../auth/AuthContext.jsx";
+import {countUserIDsContainingString} from "../../utils/functions.js";
 
 
 const SurveyDashBoard = () => {
 
-    const { userSurveys, projectName, loading, error,  } = useSurveysContext();
-    const hasContent = userSurveys?.length > 0;
 
+    const { userSurveys, projectName, loading, error  } = useSurveysContext();
+
+    const hasContent = userSurveys?.length > 0;
 
     if (error) {
         return (

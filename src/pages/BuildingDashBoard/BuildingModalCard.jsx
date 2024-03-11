@@ -20,6 +20,7 @@ function BuildingModalCard({ building, addBuilding }) {
 
     return (
         <div className="lg:max-w-[470px] w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow  ">
+
             <div className="relative h-48 overflow-hidden">
                 <a href="#">
                     <img className="object-center w-full h-full rounded-t-lg" src={imageUrl} alt={Address} />

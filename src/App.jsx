@@ -19,6 +19,8 @@ import {BuildingChooseProvider} from "./hooks/useBuildingChoose.jsx";
 import HomePage from "./pages/HomeClientPage/HomePage.jsx";
 import HomeDetailPage from "./pages/HomeClientPage/HomeDetailPage.jsx";
 import {Toaster} from "react-hot-toast";
+import FavoritesDashboard from "./pages/FavoritesDashBoard/FavoritesDashboard.jsx";
+import {FavoriteBuildingDataProvider} from "./hooks/useFavoriteData.jsx";
 
 function App() {
     return (
@@ -51,9 +53,16 @@ function App() {
                             </SurveysProvider>
                         } />
                         <Route path={"/:projectID/:surveyID"} element={
-                            <BuildingChooseProvider>
-                                <BuildingDashBoard />
-                            </BuildingChooseProvider>
+                            <FavoriteBuildingDataProvider>
+                                <BuildingChooseProvider>
+                                    <BuildingDashBoard />
+                                </BuildingChooseProvider>
+                            </FavoriteBuildingDataProvider>
+                        } />
+                        <Route path={"/favorites"} element={
+                            <FavoriteBuildingDataProvider>
+                                <FavoritesDashboard />
+                            </FavoriteBuildingDataProvider>
                         } />
                     </Route>
                 </Routes>

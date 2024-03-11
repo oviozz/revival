@@ -3,16 +3,18 @@ import {FaClipboard} from "react-icons/fa6";
 import {LuBuilding2} from "react-icons/lu";
 import React from "react";
 import { Card } from 'flowbite-react';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import EmptyState from "../../components/CompAssests/EmptyState.jsx";
 import { BsBuildingSlash } from "react-icons/bs";
 import ProjectToolMenu from "../HomeDashBoard/ProjectToolMenu.jsx";
 import SurveyToolMenu from "./SurveyToolMenu.jsx";
 import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
+import { Carousel } from 'flowbite-react';
 
 
 
 const SurveyCard = ({survey}) => {
+
 
     const {_id, surveyName, surveyType, lastUpdated, buildings, buildingImage, isError} = survey;
     const surveysContext = useSurveysContext();
@@ -64,16 +66,30 @@ const SurveyCard = ({survey}) => {
             {
                 buildingImage.length !== 0 ?
                     (
-                        <div className={"flex flex-wrap gap-4 overflow mt-4"}>
-                            {buildingImage.map((image, index) => (
-                                <img
-                                    key={index}
-                                    className={"lg:w-[17rem] w-full object-cover h-48 rounded"}
-                                    src={image}
-                                    alt={`${surveyName} ${index}`}
-                                />
-                            ))}
-                        </div>
+                        <>
+                            <div className={"flex-wrap gap-4 overflow mt-4 lg:flex hidden"}>
+                                {buildingImage.map((image, index) => (
+                                    <img
+                                        key={index}
+                                        className={"lg:w-[17rem] w-full object-cover h-48 rounded"}
+                                        src={image}
+                                        alt={`${surveyName} ${index}`}
+                                    />
+                                ))}
+                            </div>
+
+                            <div className={"flex flex-col gap-2 h-72 overflow-y-scroll mt-4 lg:hidden"}>
+                                {buildingImage.map((image, index) => (
+                                    <img
+                                        key={index}
+                                        className={"lg:w-[17rem] w-full object-cover h-72 rounded"}
+                                        src={image}
+                                        alt={`${surveyName} ${index}`}
+                                    />
+                                ))}
+                            </div>
+
+                        </>
                     )
                     :
                     <div className={`flex flex-col justify-center items-center gap-1 lg:mt-0 mt-2`}>

@@ -8,14 +8,18 @@ import { BsBuildingFillAdd } from 'react-icons/bs';
 import {GenerateObjectID} from "../../tools/GenerateObjectID.jsx";
 import {GenerateCurrentDateTime} from "../../tools/GenerateCurrentDate.jsx";
 import {useSurveysContext} from "../../hooks/useSurveysContext.jsx";
+import {useAuth} from "../../auth/AuthContext.jsx";
 
 function CreateSurveyModal() {
 
     const { addSurvey } = useSurveysContext();
     const [openModal, setOpenModal] = useState(false);
+    const { userInfo } = useAuth();
+    const userID = userInfo.uid;
 
     const [survey, setSurvey] = useState({
         _id: GenerateObjectID(),
+        userID: userID,
         surveyName: '',
         surveyType: "Survey",
         buildingImage: [],
@@ -27,6 +31,7 @@ function CreateSurveyModal() {
         setOpenModal(false);
         setSurvey({
             _id: GenerateObjectID(),
+            userID: userID,
             surveyName: '',
             surveyType: "Survey",
             buildingImage: [],

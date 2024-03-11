@@ -1,7 +1,7 @@
 
 import NavBarLogo from "./NavBarLogo.jsx";
 import { IoPersonSharp } from "react-icons/io5";
-import { IoNotifications } from "react-icons/io5";
+import { IoNotifications, IoHeart } from "react-icons/io5";
 import {Link} from "react-router-dom";
 import {useAuth} from "../../auth/AuthContext.jsx";
 
@@ -20,7 +20,11 @@ const NavBar = () => {
             <div className={"flex items-center gap-2"}>
 
                 {
-                    isAuthenticated ? <IoNotifications size={25} className={"mr-2"}/> : null
+                    isAuthenticated ? (
+                        <Link to={"/favorites"} className={"mr-2 font-semibold "}>
+                            <IoHeart size={30} />
+                        </Link>
+                    ) : null
                 }
 
                 <Link onClick={deleteAuthToken} to={'/signin'} className="flex items-center  sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500"
