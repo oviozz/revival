@@ -24,7 +24,7 @@ export default function SurveyToolMenu({survey}) {
 
     const { projectID } = useParams();
     const { buildings } = survey;
-    const pageURL = `http://localhost:5173/${projectID}/${survey._id}`
+    const pageURL = `https://revivalestates.vercel.app/${projectID}/${survey._id}`
     const { deleteSurvey, updateSurvey } = useSurveysContext();
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isURLCopied, setURLCopied] = useState(false);
