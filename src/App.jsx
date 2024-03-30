@@ -27,12 +27,12 @@ function App() {
         <AuthProvider>
             <NavBarLayout>
                 <Routes>
-                    <Route path={"/home"} element={
+                    <Route path={"/client"} element={
                         <BuildingChooseProvider>
                             <HomePage />
                         </BuildingChooseProvider>
                     } />
-                    <Route path={"/home/detail"} element={
+                    <Route path={"/client/detail"} element={
                         <BuildingChooseProvider>
                             <HomeDetailPage />
                         </BuildingChooseProvider>
