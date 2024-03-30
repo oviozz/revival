@@ -7,6 +7,7 @@ const parseAddress = (fullAddress) => {
     if (match) {
         const [, streetNumber, streetName, city, state, zipcode] = match;
 
+        console.log(streetNumber)
         // Check if zipcode is undefined and set it to an empty string
         const normalizedZipcode = typeof zipcode !== 'undefined' ? zipcode : '';
 

@@ -11,7 +11,7 @@ const ProtectedLayout = () => {
         isAuthenticated ?
             <Outlet />
             :
-            <Navigate to={"/home"} />
+            <Navigate to={"/signin"} />
     )
 
 }

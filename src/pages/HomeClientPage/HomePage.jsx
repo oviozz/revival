@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from "react";
 import BuildingCardClient from "./BuildingCardClient.jsx";
 import Loader from "../../components/CompAssests/Loader.jsx";
