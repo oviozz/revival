@@ -49,12 +49,12 @@ function AddBuildingModal() {
                 const {city, state, zipcode} = parseAddress(fullAddress);
 
                 const url = `https://socalwarehousesapi.vercel.app/getcombineddata?zipcode=${zipcode}&city=${city}&state=${state}&page=${currentPage}&propertyType=${propertyType}&salekind=${salesKind}`;
-                console.log(url)
                 const response = await fetch(url);
 
                 if (response.status === 500) {
                     setError(true)
                 }
+
 
                 const data = await response.json();
 
