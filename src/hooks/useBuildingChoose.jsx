@@ -42,7 +42,7 @@ const BuildingChooseProvider = ({ children }) => {
         setError(null);
 
         try {
-            const response = await fetch(`https://socalwarehousesapi.vercel.app/getdetails?detailid=${id}`);
+            const response = await fetch(`https://socalwarehouseapi.vercel.app/getdetails?detailid=${id}`);
             const result = await response.json();
             setData(result);
         } catch (error) {
