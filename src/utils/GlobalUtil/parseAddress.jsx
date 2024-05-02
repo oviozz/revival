@@ -17,9 +17,12 @@ const parseAddress = (fullAddress) => {
             city,
             state,
             zipcode: normalizedZipcode,
+            error: false,
         };
     } else {
-        throw new Error('Invalid address format');
+        return {
+            error: true
+        }
     }
 };
 
