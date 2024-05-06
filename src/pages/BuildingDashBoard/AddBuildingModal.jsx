@@ -16,6 +16,7 @@ import {Link} from "react-router-dom";
 import {MdOutlineKeyboardArrowRight} from "react-icons/md";
 import BuildingFilter from "../../components/CompAssests/BuildingFilter.jsx";
 import GoogleSearchInput from "./GoogleSearchInput.jsx";
+import NoPropertyDataUI from "./NoPropertyDataUI.jsx";
 
 function AddBuildingModal() {
 
@@ -35,36 +36,50 @@ function AddBuildingModal() {
     const [propertyType, setPropertyType] = useState('');
     const [salesKind, setSaleskind] = useState('');
     const [inputError, setInputError] = useState(false)
+    const [priceRange, setPriceRange] = useState(null);
 
     const clearFilters = () => {
-        if (propertyType.trim() !== "" || salesKind.trim() !== "") {
+        console.log('working')
+        if (propertyType.trim() !== "" || salesKind.trim() !== "" || priceRange) {
             setPropertyType('');
             setSaleskind('');
+            setPriceRange(null);
+
+            document.getElementById("buildingTypeDropdown").selectedIndex = 0;
+            document.getElementById("saleTypeDropdown").selectedIndex = 0;
+            document.getElementById("priceRangeDropdown").selectedIndex = 0;
         }
     };
 
     useEffect(() => {
-        setError(false)
+        setError(false);
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const {error, city, state, zipcode} = parseAddress(fullAddress);
-
-                setInputError(error)
+                const { error, city, state, zipcode } = parseAddress(fullAddress);
+                setInputError(error);
 
                 const url = `https://socalwarehouseapi.vercel.app/getcombineddata?zipcode=${zipcode}&city=${city}&state=${state}&page=${currentPage}&propertyType=${propertyType}&salekind=${salesKind}`;
                 const response = await fetch(url);
 
                 if (response.status === 500) {
-                    setError(true)
+                    setError(true);
                 }
-
 
                 const data = await response.json();
 
                 if (data.propertyData.length > 0) {
-                    setMaxPage(data.maxPage)
-                    setBuildingData(data.propertyData);
+                    // Filter the building data based on the selected price range
+                    const filteredData = data.propertyData.filter(building => {
+                        if (priceRange) {
+                            return building.Price && parseInt(building.Price.replace(/[^0-9.-]+/g, "")) >= priceRange.min && parseInt(building.Price.replace(/[^0-9.-]+/g, "")) <= priceRange.max;
+                        } else {
+                            return true; // If no price range selected, return all buildings
+                        }
+                    });
+
+                    setMaxPage(data.maxPage);
+                    setBuildingData(filteredData);
                 }
 
                 setLoading(false);
@@ -77,7 +92,7 @@ function AddBuildingModal() {
         if (fullAddress) {
             fetchData();
         }
-    }, [fullAddress, currentPage, propertyType, salesKind]);
+    }, [fullAddress, currentPage, propertyType, salesKind, priceRange]);
 
     const onCloseModal = () => {
         setOpenModal(false);
@@ -135,7 +150,7 @@ function AddBuildingModal() {
                                                         </button>
 
                                                     </form>
-                                                    <BuildingFilter clearFilter={clearFilters} setPropertyType={setPropertyType} setSaleskind={setSaleskind} />
+                                                    <BuildingFilter clearFilter={clearFilters} setPropertyType={setPropertyType} setSaleskind={setSaleskind} setPriceRange={setPriceRange} />
                                                 </div>
 
                                                 {loading ? (
@@ -155,6 +170,10 @@ function AddBuildingModal() {
                                                             ))}
                                                         </div>
 
+                                                        {
+                                                            buildingData.length <= 0 && <NoPropertyDataUI />
+                                                        }
+
                                                         <div className={"lg:block hidden"}>
                                                             <div className={`flex flex-col items-center mt-3`}>
                                                                 <Pagination currentPage={currentPage} totalPages={maxPage}
@@ -170,6 +189,8 @@ function AddBuildingModal() {
                                                         </div>
                                                     </>
                                                 )}
+
+
                                             </div>
                                         )
                                 }

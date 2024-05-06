@@ -60,6 +60,7 @@ export default function GoogleSearchInput({ setFullAddress, inputError }) {
             },
             (place, status) => {
                 if (status === places.PlacesServiceStatus.OK) {
+                    console.log(place)
                     setFullAddress(place?.formatted_address);
                 } else {
                     console.error('Error fetching place details');
